@@ -29,6 +29,7 @@
 - ✅ chatgpt 支持文件后端上传（供给gpt-4-all gpt-4-gizmo-xxx 模型）！ 默认是关闭的 打开需要环境变量 API_UPLOADER=1
 - ✅ chatgpt 支持逆向模型 gpt-4-all gpt-4-v gpt-4-gizmo-(gizmo_id)
 - ✅ chatgpt 支持超链模型切换 https://vercel.ddaiai.com/#/m/gpt-4-all https://vercel.ddaiai.com/#/m/gpt-4-gizmo-g-2fkFE8rbu
+- ✅ 支持ChatGPT试的超链模型切换 https://chat.openai.com/g/g-2fkFE8rbu 修改为 https://vercel.ddaiai.com/#/g/g-2fkFE8rbu
 - ✅ chatgpt 支持 GPTs 多模态
 - ✅ chatgpt 支持 tts whisper
 - ✅ 支持超链更换设置，适合 one-api 部署聊天 https://vercel.ddaiai.com/#/s/t?OPENAI_API_BASE_URL=https://abc.com&OPENAI_API_KEY=sk-xxxxx&MJ_SERVER=https://abc.com&MJ_API_SECRET=sk-xxx&UPLOADER_URL=
@@ -136,6 +137,18 @@ docker run -d --name mj6013  -p 6013:8080  \
 </div>
 
 
+## 文件上传 支持cloudflare r2 存储
+
+- cloudflare r2 存储 10 GB/月 免费 https://www.cloudflare.com/zh-cn/developer-platform/r2/
+- 配置文档参考 https://zhuanlan.zhihu.com/p/658058503
+
+```yml
+R2_DOMAIN=
+R2_BUCKET_NAME=
+R2_ACCOUNT_ID=
+R2_KEY_ID=
+R2_KEY_SECRET=
+```
 
 ## License
 MIT © [Dooy](./license)
