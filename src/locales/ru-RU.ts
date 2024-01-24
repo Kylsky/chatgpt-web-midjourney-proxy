@@ -164,8 +164,24 @@ export default {
   "mRecord": "Перезаписать",
   "mPlay": "Воспроизвести",
   "mCanel": "Отмена",
-  "mSent": "Отправить"
+  "mSent": "Отправить",
+  "findVersion": "Обнаружить обновленную версию",
+  "yesLastVersion": "Уже последняя версия",
+  "infoStar": "Этот проект с открытым исходным кодом находится на <a class=\"text-blue-600 dark:text-blue-500\" href=\"https://github.com/Dooy/chatgpt-web-midjourney-proxy\" target=\"_blank\">GitHub</a>, бесплатный и основан на лицензии MIT без каких-либо форм оплаты! </p><p>Если вы находите этот проект полезным, пожалуйста, добавьте звезду на GitHub, спасибо!",
+  "setBtSaveChat": "Сохранить только чат",
+  "setBtSaveSys": "Сохранить в систему",
 
+  "wsrvClose": "Закрыть wsrv",
+  "wsrvOpen": "Открыть wsrv",
+
+  "temperature": "Случайность",
+  "temperatureInfo": "При увеличении значения (temperature) ответы становятся более случайными",
+  "top_p": "Верхняя вероятность выборки",
+  "top_pInfo": "(top_p) аналогично случайности, но не следует изменять вместе с температурой",
+  "presence_penalty": "Свежесть темы",
+  "presence_penaltyInfo": "При увеличении значения (presence_penalty) увеличивается вероятность расширения на новые темы",
+  "frequency_penalty": "Частотное наказание",
+  "frequency_penaltyInfo": "При увеличении значения (frequency_penalty) увеличивается вероятность уменьшения повторяющихся слов"
   },
   "mjset": {
     "server": "Сервер",

@@ -7,6 +7,7 @@ import { localGet, localSaveAny } from "./mjsave";
 import { isNumber, isObject } from "@/utils/is";
 import { t } from "@/locales";
 import { ChatMessage } from "gpt-tokenizer/esm/GptEncoding";
+import { chatSetting } from "./chat";
 //import {encode,  encodeChat}  from "gpt-tokenizer"
 //import {encode,  encodeChat} from "gpt-tokenizer/cjs/encoding/cl100k_base.js";
 //import { get_encoding } from '@dqbd/tiktoken'
@@ -152,6 +153,7 @@ interface subModelType{
     onError?:(d?:any)=>void
     signal?:AbortSignal
     model?:string
+    uuid?:string|number
 }
 function getHeaderAuthorization(){
     if(!gptServerStore.myData.OPENAI_API_KEY){
@@ -162,9 +164,14 @@ function getHeaderAuthorization(){
     }
 }
 
-export const getSystemMessage = ()=>{
+export const getSystemMessage = (uuid?:number )=>{
     //KnowledgeCutOffDate
-    if( gptConfigStore.myData.systemMessage) return  gptConfigStore.myData.systemMessage
+    let sysTem= gptConfigStore.myData.systemMessage;
+    if( uuid ){
+        const chatS= new chatSetting(uuid);
+        sysTem= chatS.getGptConfig().systemMessage ;
+    }
+    if(  sysTem ) return sysTem;
     let model= gptConfigStore.myData.model?gptConfigStore.myData.model: "gpt-3.5-turbo";
       const DEFAULT_SYSTEM_TEMPLATE = `You are ChatGPT, a large language model trained by OpenAI.
 Knowledge cutoff: ${KnowledgeCutOffDate[model]}
@@ -179,13 +186,26 @@ export const subModel= async (opt: subModelType)=>{
     //
     const model= opt.model?? ( gptConfigStore.myData.model?gptConfigStore.myData.model: "gpt-3.5-turbo");
     let max_tokens= gptConfigStore.myData.max_tokens;
+    let temperature= 0.5;
+    let top_p= 1;
+    let presence_penalty= 0 , frequency_penalty=0;
+    if(opt.uuid){
+        const chatSet= new chatSetting( +opt.uuid);
+        const gStore= chatSet.getGptConfig();
+        temperature= gStore.temperature??temperature;
+        top_p = gStore.top_p??top_p;
+        presence_penalty = gStore.presence_penalty??presence_penalty;
+        frequency_penalty = gStore.frequency_penalty??frequency_penalty;
+        max_tokens= gStore.max_tokens;
+    }
     if(model=='gpt-4-vision-preview' && max_tokens>2048) max_tokens=2048;
+
     let body ={
             max_tokens ,
             model ,
-            "temperature": 0.5,
-            "top_p": 1,
-            "presence_penalty":0,
+            temperature,
+            top_p,
+            presence_penalty ,frequency_penalty,
             "messages": opt.message
            ,stream:true
         }
@@ -317,7 +337,22 @@ export const  gptUsage=async ()=>{
 export const openaiSetting= ( q:any )=>{
     //mlog()
     mlog('setting', q )
-    if(isObject(q)){
+    if(q.settings){
+        mlog('q.setting', q.settings )
+        try {
+            let obj = JSON.parse( q.settings );
+            const url = obj.url ?? undefined;
+            const key = obj.key ?? undefined;
+            //let setQ= { }
+            gptServerStore.setMyData(  {OPENAI_API_BASE_URL:url, MJ_SERVER:url, OPENAI_API_KEY:key,MJ_API_SECRET:key } )
+            blurClean();
+            gptServerStore.setMyData( gptServerStore.myData );
+            
+        } catch (error) {
+            
+        }
+    }
+    else if(isObject(q)){
         mlog('setting2', q )
         gptServerStore.setMyData(  q )
         //gptServerStore.setMyData( gptServerStore.myData );

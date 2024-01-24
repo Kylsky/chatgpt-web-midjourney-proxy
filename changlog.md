@@ -1,5 +1,29 @@
 # 功能升级日志
 
+#  计划
+- 🐞 修复：垫图图片不能2次使用
+- 😄 新增：标头 列表页
+
+# 2.14.7
+- 😄 新增： 补回`temperature` 和 `top_p` `presence_penalty` `frequency_penalty`设置  #86
+- 😄 优化： 切换模型中  所有设置能随着对话框保存
+- 🐞 修复： 默认画图打开 #99
+
+# 2.14.6
+- 😄 新增： 语言版本`法语` `土耳其语` 感谢 @M4K4R PR
+- 🐞 修复： 手机端token被遮挡  #98
+- 🐞 修复： 环境变量 打开wsrv图片图床 `MJ_IMG_WSRV=1`
+- 🐞 修复： midjourney图片 wsrv图床 bug
+
+# 2.14.5
+- 😄 新增： midjourney wsrv访问图片
+# 2.14.4
+- 🐞 修复：手机端的页面绘画不出图 #59
+- 🐞 修复：midjourney 强制刷新不起作用
+# 2.14.3
+- 😄 新增： 角色自定到会话 #75 #40
+- 😄 新增： 支持one-api部署聊天 https://vercel.ddaiai.com/#/?settings={%22key%22:%22sk-abc%22,%22url%22:%22https://api.openai.com%22}
+
 # 2.14.2
 - 🐞 修复： gpt-4-1106-preview 模型 128000 #66
 - 😄 新增： 录音whisper转文本对话ChatGPT

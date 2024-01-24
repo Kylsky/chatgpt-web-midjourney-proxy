@@ -165,7 +165,25 @@ export default {
   "mRecord": "Re-record",
   "mPlay": "Play",
   "mCanel": "Cancel",
-  "mSent": "Send"
+  "mSent": "Send",
+
+  "findVersion": "Discover updated version",
+  "yesLastVersion": "Already on the latest version",
+  "infoStar": 'This project is open source on <a class="text-blue-600 dark:text-blue-500" href="https://github.com/Dooy/chatgpt-web-midjourney-proxy\" target="_blank">GitHub</a>, free, and based on the MIT license with no form of payment! </p><p>If you find this project helpful, please give it a Star on GitHub, thank you!',
+  "setBtSaveChat": "Save chat only",
+  "setBtSaveSys": "Save to system",
+  "wsrvClose": "Close wsrv",
+  "wsrvOpen": "Open wsrv",
+
+  "temperature": "Temperature",
+  "temperatureInfo": "As the (temperature) value increases, the responses become more random",
+  "top_p": "Top",
+  "top_pInfo": "(top_p) is similar to randomness but should not be changed together with temperature",
+  "presence_penalty": "Presence",
+  "presence_penaltyInfo": "As the (presence_penalty) value increases, there is a higher chance of expanding to new topics",
+  "frequency_penalty": "Frequency",
+  "frequency_penaltyInfo": "As the (frequency_penalty) value increases, there is a higher likelihood of reducing repeated words"
+
   },
   "mjset": {
     "server": "Server",
