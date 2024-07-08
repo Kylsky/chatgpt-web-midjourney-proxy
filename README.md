@@ -1,12 +1,17 @@
 # ChatGPT Web Midjourney Proxy
-💡**声明**
-- 此项目只发布于 GitHub，基于 MIT 协议，免费且作为开源学习使用。并且不会有任何形式的卖号、付费服务、讨论群、讨论组等行为。谨防受骗。
-- 本开源是在 [ChenZhaoYu](https://github.com/Chanzhaoyu/chatgpt-web) 基础上做二次开发 ；使用 [midjourney-proxy](https://github.com/novicezk/midjourney-proxy) 提供的midjourney api和 [Suno-API](https://github.com/SunoAI-API/Suno-API)  作为后端而形成的；
 
+[English](./README_EN.md) | [Русский язык](./README_RU.md) | [Français](./README_FR.md) | [한국어](./README_KR.md) | [Tiếng Việt](./README_VN.md) | [Türkçe](./README_TR.md)
+
+## 声明
+- 此项目只发布于 GitHub，基于 MIT 协议，免费且作为开源学习使用。并且不会有任何形式的卖号、付费服务、讨论群、讨论组等行为。谨防受骗。
+- 本开源是在 [ChenZhaoYu](https://github.com/Chanzhaoyu/chatgpt-web) 基础上做二次开发 ；使用 [midjourney-proxy](https://github.com/novicezk/midjourney-proxy) 、 Suno-API、[Luma-API](https://github.com/LumaAI-API/Luma-API)  作为后端API而形成的；
+- 可以直接用 https://vercel.ddaiai.com 先体验
 
 ![cover](./docs/mj2a1.jpg)
 ## 支持功能 
+- [x] 支持 luma 文生视频，图生视频
 - [x] 支持 suno 单独模块，可歌词调整 曲风调整
+- [x] 支持 suno 以音频生成音频
 - [x] 原chatgpt web 所有功能
 - [x] chatgpt web 支持自定义api key、base_url
 - [x] midjourney 文生图
@@ -34,15 +39,13 @@
 - [X] chatgpt 支持 GPTs 多模态
 - [X] chatgpt 支持 tts whisper
 - [X] 即时语音识别(浏览器自带语音识别 ASR) `v2.15.7`以上版本
-- [X] 支持超链更换设置，适合 one-api 部署聊天 https://vercel.ddaiai.com/#/s/t?OPENAI_API_BASE_URL=https://abc.com&OPENAI_API_KEY=sk-xxxxx&MJ_SERVER=https://abc.com&MJ_API_SECRET=sk-xxx&UPLOADER_URL=
-- [X] 支持one-api部署聊天 https://vercel.ddaiai.com/#/?settings={%22key%22:%22sk-abc%22,%22url%22:%22https://www.abc.com%22} `(v.2.14.3)`
-## 待开发
-- ⏰ ....
+- [X] 支持超链更换设置，适合`one-api` `new-api`部署聊天 https://vercel.ddaiai.com/#/s/t?OPENAI_API_BASE_URL=https://abc.com&OPENAI_API_KEY=sk-xxxxx&MJ_SERVER=https://abc.com&MJ_API_SECRET=sk-xxx&UPLOADER_URL=
+- [X] 支持`one-api`、`new-api`部署聊天 https://vercel.ddaiai.com/#/?settings={%22key%22:%22sk-abc%22,%22url%22:%22https://www.abc.com%22} `(v.2.14.3)`
 
 ## 无服务器-个人桌面安装
 > - [x] 请到 https://github.com/Dooy/chatgpt-web-midjourney-proxy/releases 下载最新版本安装(选择合适你操作系统的版本)
-> - [x] 选择一个合适的中转服务商( 最好都支持 `gpt`, `gpts`, `midjourney`, `claude`, `suno` )
-> - [x] 中转服务商推荐 https://www.openai-hk.com `一个接口` + `一个key` 支持 `gpt` `midjourney` `claude` `suno`
+> - [x] 选择一个合适的中转服务商( 最好都支持 `gpt`  `gpts` `midjourney` `claude`  `suno` `luma` )
+> - [x] 中转服务商推荐 https://www.openai-hk.com 一个`key`和`api接口地址` 同时支持 `gpt` `midjourney` `claude` `suno` `luma`，mj-fast最低能到0.12rmb/张,`suno` 最低能到官网半价, `luma`最低能到0.16rmb/次
 ![多模态](./docs/suno-ds.jpg)
 
 ## Vercel 一键部署
@@ -63,7 +66,7 @@
 | AUTH_SECRET_KEY |  访问授权密码 | 无  | ✅ |   x|
 | API_UPLOADER |  支持上传 | 关闭  | ✅ |  x|
 | HIDE_SERVER |  前端ui隐藏服务端|    | ✅ |  x|
-| CUSTOM_MODELS |  自定义可选模型 | 无  | ✅ |  ✅|
+| CUSTOM_MODELS |  自定义可选模型 `CUSTOM_MODELS=-all,gpt-3.5` | 无  | ✅ |  ✅|
 | TJ_BAIDU_ID |  百度统计ID | 无  | ✅ |  ✅|
 | TJ_GOOGLE_ID |  谷歌统计ID | 无  | ✅ |  ✅|
 | SYS_NOTIFY |  系统通知，支持HTML | 无  | ✅ |  ✅|
@@ -76,14 +79,20 @@
 | AUTH_SECRET_ERROR_TIME | 防爆破验证：停留时间 单位分钟  | 无  | ✅ |  x|
 | CLOSE_MD_PREVIEW | 是否不关闭输入预览 | 无  | ✅ |  ✅|
 | UPLOAD_TYPE | 指定上传方式 [`R2` R2上传] [`API` 跟随UI前端中转]、[`Container` 本地容器]、[`MyUrl` 自定义链接]  |  空 | ✅ |  x|
-| MENU_DISABLE  | 菜单禁用 可选:gpts,draws,gallery,music |  空 | ✅ |  ✅|
+| MENU_DISABLE  | 菜单禁用 可选:gpts,draws,gallery,music,video |  空 | ✅ |  ✅|
+| VISION_MODEL  | 默认使用的识图 可选:`gpt-4o`,`gpt-4-turb`,`gpt-4-vision-preview`等 |  空 | ✅ |  ✅|
+| SYSTEM_MESSAGE  | 自定义默认角色消息 |  空 | ✅ |  ✅|
+| CUSTOM_VISION_MODELS  | 自定义可视图模型 用`,` 分开 |  空 | ✅ |  ✅|
+| LUMA_SERVER |  LUMA API 接口地址  | [搭建参考](https://github.com/LumaAI-API/Luma-API) | ✅ |  ✅|
+| LUMA_KEY |  LUMA API 的key | 空  | ✅ |  ✅|
 
   
 
 ## docker 部署
  
 > - [x] 需 [midjourney-proxy](https://github.com/novicezk/midjourney-proxy)   支持
-> - [x] 需 [Suno-API](https://github.com/SunoAI-API/Suno-API)  支持
+> - [x] 需 Suno-API  支持
+> - [x] 需 [Luma-API](https://github.com/LumaAI-API/Luma-API)  支持
 
 
 ```bash
@@ -92,6 +101,8 @@ docker run --name chatgpt-web-midjourney-proxy  -d -p 6015:3002 \
 -e OPENAI_API_BASE_URL=https://api.openai.com  \
 -e MJ_SERVER=https://your-mj-server:6013  \
 -e MJ_API_SECRET=your-mj-api-secret  \
+-e LUMA_SERVER=https://your-luma-server:8000  \
+-e LUMA_KEY=your-luma-key  \
 -e SUNO_SERVER=https://your-suno-server:8000  \
 -e SUNO_KEY=you-suno-key  ydlhero/chatgpt-web-midjourney-proxy
 ```
