@@ -21,7 +21,7 @@ const vf=[{s:'width: 100%; height: 100%;',label:'1:1'}
 ,{s:'width: 50%; height: 100%;',label:'9:16'}
  ];
 
-const f=ref({bili:-1, quality:'',view:'',light:'',shot:'',style:'', styles:'',version:'--v 6.0',sref:'',cref:'',cw:'',});
+const f=ref({bili:-1, quality:'',view:'',light:'',shot:'',style:'', styles:'',version:'--v 6.1',sref:'',cref:'',cw:'',});
 const st =ref({text:'',isDisabled:false,isLoad:false
     ,fileBase64:[],bot:'',showFace:false,upType:''
 });
@@ -69,7 +69,7 @@ function create( ){
     train( st.value.text.trim()).then(ps=>{
         const rz={ prompt: st.value.text.trim() , drawText: createPrompt( ps) }
         if( ps  ) drawSent(rz)
-        st.value.text=''
+        //st.value.text=''
         st.value.isLoad=false
     }).catch(err=>{
         msgRef.value.showError(err)
@@ -203,8 +203,22 @@ watch(()=>homeStore.myData.act,(n)=>{
    // n=='copy' && copy2();
     n=='same2' && same2();
 });
+watch(()=>f.value,(n)=>{
+    mlog("变化", n )
+    localStorage.setItem("mjinput",  JSON.stringify(n))
+},{deep:true} );
 onMounted(()=>{
     homeStore.myData.act=='same2' && same2();
+
+    let minput=  localStorage.getItem('mjinput')
+    if(minput ){
+      try {
+        const a=JSON.parse(minput)
+        f.value=a
+      } catch (error) {
+        mlog("错误", error )
+      }
+    }
 });
 
 

@@ -1,28 +1,28 @@
 <script setup lang="ts"> 
 import { FeedViggleTask } from '@/api/viggle';
 import { ViggleTask, viggleStore } from '@/api/viggleStore';
-import {NEmpty ,NButton,NPopover, NTag,NButtonGroup } from 'naive-ui'
+import {NEmpty ,NButton,NPopover, NTag,NButtonGroup,useMessage ,NPopconfirm} from 'naive-ui'
  
 import { ref, watch } from 'vue';
 import {SvgIcon} from "@/components/common"
 import { homeStore } from '@/store';
+import { t } from '@/locales';
 
 const st= ref({pIndex:-1});
 const list= ref<ViggleTask[]>([]);
-
+const ms = useMessage();
 const csuno = new viggleStore()
 const initLoad=()=>{
     let arr = csuno.getObjs();
     list.value= arr.reverse()
 }
 const TaskDown=async (item:ViggleTask)=>{
-    //FeedLumaTask(id)
     
-        //window.open(d.url)
     const link = document.createElement('a');
     link.href = item.result ;
     link.download = item.taskID+".mp4";
     link.target = '_blank';
+    link.rel='noreferrer'
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -32,6 +32,13 @@ const TaskDown=async (item:ViggleTask)=>{
 watch(()=>homeStore.myData.act, (n)=>{
      if(n=='FeedViggleTask')  initLoad() 
 });
+const deleteGo=(v:ViggleTask)=>{
+    if(csuno.delete(v)) {
+        ms.success( t('common.deleteSuccess'))
+        initLoad();
+    }
+
+}
 initLoad()
 </script>
 <template>
@@ -39,7 +46,11 @@ initLoad()
     <div  class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         <div v-for="(item, index) in list" :key="index" class="relative" @mousemove="st.pIndex=index" @mouseout="st.pIndex=-1">
             <div class="relative flex items-center justify-center bg-white bg-opacity-10 rounded-[16px] overflow-hidden aspect-[16/8.85] ">
-                <video class="bg-[#242424] object-contain w-full h-full transition-all" v-if="item.result" :src="item.result" :poster="item.resultCover" loop  playsinline  :controls="st.pIndex==index" ></video>
+                <video class="bg-[#242424] object-contain w-full h-full transition-all"
+                 v-if="item.result"   referrerpolicy="no-referrer"
+                :poster="item.resultCover" loop  playsinline  :controls="st.pIndex==index" >
+                    <source :src="item.result" referrerpolicy="no-referrer" type="video/mp4" v-if="st.pIndex==index">
+                </video>
                 <div class=" text-center" v-else>
                      
                     <NButton  size="small" type="primary" @click="FeedViggleTask( item.taskID )"   v-if="!item.last_feed|| ((new Date().getTime())-item.last_feed)>20*1000" >{{$t('video.repeat')}}</NButton>
@@ -66,6 +77,12 @@ initLoad()
                       <n-button-group size="tiny">
                         <n-button  size="tiny" round ghost @click="TaskDown( item )"   ><SvgIcon icon="mdi:download" /> {{ $t('video.download') }}</n-button>
                         <!-- <n-button   size="tiny"  round ghost   ><SvgIcon icon="ri:video-add-line" /> {{ $t('video.extend') }}</n-button> -->
+                        <n-button   size="tiny"  round ghost    > 
+                                <n-popconfirm @positive-click="()=>deleteGo(item)" placement="bottom">
+                                    <template #trigger> <SvgIcon icon="mdi:delete"  /></template>
+                                    {{ $t('mj.confirmDelete') }}
+                                </n-popconfirm> 
+                            </n-button>
                       </n-button-group>
                      <!-- <a :href="item.video?.download_url? item.video?.download_url:item.video?.url" download  target="_blank" v-if="item.video?.url|| item.video?.download_url"  ><SvgIcon icon="mdi:download" class="cursor-pointer"/></a> -->
                 </div>
