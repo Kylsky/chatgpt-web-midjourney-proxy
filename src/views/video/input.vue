@@ -12,7 +12,8 @@ import { useRoute } from 'vue-router';
 const route = useRoute(); // 获取当前路由对象
 
 //"fal-ai/ltxv-13b-098-distilled/image-to-video"
-const st= ref({"model":"veo3-fast-frames",isLoading:false});
+//const st= ref({"model":"veo3-fast-frames",isLoading:false});
+const st= ref({"model":"sora-2",isLoading:false});
 const stArr= ref<any[]>([])
 const modelsOption= ref<{label:string,value:string}[]>([])
 const tplArr= ref<DtoTpl[]>([])
@@ -29,7 +30,10 @@ const initStart= ()=>{
     const abc=()=>{
          let arr=[{label:'Please select Model',value: ''}];
             for( let o of mytpl.tpl){
+                
                 arr.push({label: o.model,value: o.model})
+                
+               
             }
             return arr
     }
@@ -51,8 +55,10 @@ initStart();
  
 const nowTpl= computed(()=>{
     //let arr:any[]=[];
+    mlog("nowTpl",st.value.model)
     stArr.value=[];
     const mtpl= tplArr.value.find(v=> v.model==st.value.model)
+    
     if(!mtpl) return [];
     for( let o of mtpl.field){
         stArr.value.push(o.value??'')
@@ -128,6 +134,9 @@ onMounted(() => {
             </div>
              <div class="pt-1" v-if="tp.type=='image_base64_url'">
                 <image-base64-array v-model:value="stArr[k]" :is-one="true"></image-base64-array>
+            </div>
+            <div class="pt-1" v-if="tp.type=='image_base64_file'">
+                <image-base64-array v-model:value="stArr[k]" :is-file="true"  :is-one="true" upload="1"  ></image-base64-array>
             </div>
 
             <div class="pt-1" v-if="tp.type=='select'">
